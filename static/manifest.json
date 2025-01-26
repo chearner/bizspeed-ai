@@ -1,0 +1,17 @@
+{
+    "name": "BizBox - BizSpeed Toolbox",
+    "description": "BizBox features a variety of tools to speed your business operations. Each app utilzes the latest multimodal AI capabilities to scan and store BOL information, and more!",
+    "short_name": "BizBox",
+    "display": "standalone",
+    "start_url": "/",
+    "background_color": "#808080",
+    "theme_color": "#ff3f20",
+    "icons": [
+        {
+            "src": "logo1.avif",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
