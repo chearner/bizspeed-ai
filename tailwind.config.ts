@@ -1,48 +1,44 @@
-import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
-import defaultTheme from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
-import daisyui from 'daisyui';
+import plugin from 'flowbite/plugin';
 
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
-	daisyui: {
-		themes: ['business', 'light', 'dark']
-	},
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+	],
+	plugins: [plugin],
+	darkMode: 'selector',
 	theme: {
 		extend: {
-			fontFamily: {
-				sans: ['Helvetica-Roman', ...defaultTheme.fontFamily.sans]
-			}
-		},
-		colors: {
-			bizblue: {
-				50: '#E6E9EF',
-				100: '#CDD4DF',
-				200: '#9BA8C0',
-				300: '#697DA0',
-				400: '#495974',
-				500: '#293241',
-				600: '#222935',
-				700: '#181D26',
-				800: '#101319',
-				900: '#080A0D',
-				950: '#040506'
+			zIndex: {
+				'100': '100'
 			},
-			bizorange: {
-				50: '#FFECEB',
-				100: '#FFD9D6',
-				200: '#FFAEA9',
-				300: '#FE8880',
-				400: '#FE5E52',
-				500: '#FE382A',
-				600: '#EA1101',
-				700: '#B20D01',
-				800: '#750801',
-				900: '#3D0400',
-				950: '#1E0200'
+			colors: {
+				primary: {
+					50: '#FFF5F2',
+					100: '#FFF1EE',
+					200: '#FFE4DE',
+					300: '#FFD5CC',
+					400: '#FFBCAD',
+					500: '#FE795D',
+					600: '#EF562F',
+					700: '#EB4F27',
+					800: '#CC4522',
+					900: '#A5371B'
+				},
+				logo: {
+					50: '#6B7280',
+					100: '#6B7280',
+					200: '#6B7280',
+					300: '#6B7280',
+					400: '#6B7280',
+					500: '#6B7280',
+					600: '#6B7280',
+					700: '#6B7280',
+					800: '#6B7280',
+					900: '#6B7280'
+				}
 			}
 		}
-	},
-	plugins: [daisyui]
+	}
 } satisfies Config;
