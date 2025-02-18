@@ -1,11 +1,11 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
 	@font-face {
 		font-family: 'Helvetica-Bold';
-		src: url('./src/lib/fonts/Helvetica-Bold.otf') format('opentype');
+		src: url('./src/lib/fonts/Helvetica-Bold.ttf') format('opentype');
 	}
 	@font-face {
 		font-family: 'Helvetica-Bold-Oblique';
@@ -52,6 +52,11 @@
 	font-family: 'Helvetica-Light';
 }
 
-.btn {
-	color: white;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	letter-spacing: -0.05em;
 }
