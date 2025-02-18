@@ -1,16 +1,16 @@
 <script lang="ts">
-	import Scan from '$components/Scan.svelte';
 	import { Heading, P } from 'flowbite-svelte';
+	//import Account from '$components/Account.svelte';
 </script>
 
 <svelte:head>
-	<title>About</title>
-	<meta name="description" content="About this app" />
+	<title>Solutions</title>
+	<meta name="description" content="Solutions" />
 </svelte:head>
 
 <div class="m-4 flex flex-col">
 	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold md:text-5xl lg:text-6xl"
-		>About BizSpeed</Heading
+		>Solutions</Heading
 	>
 	<P>
 		Dispatch, Routing, and Mobile Software for Oil, Fuel, Propane, Lubricant, and Chemical
