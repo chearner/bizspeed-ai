@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Scan from '$components/Scan.svelte';
 	import { Heading, P } from 'flowbite-svelte';
+	import { Section } from 'flowbite-svelte-blocks';
 </script>
 
 <svelte:head>
@@ -8,7 +9,7 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<div class="m-4 flex flex-col">
+<Section name="none" sectionClass="m-4 flex flex-col">
 	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold md:text-5xl lg:text-6xl"
 		>About BizSpeed</Heading
 	>
@@ -35,4 +36,4 @@
 		Plan routes with maximum efficiency. Track planned vs actual performance in real time. Prevent
 		inventory loss or theft. Prevent issues with product integrity or incomplete deliveries.
 	</P>
-</div>
+</Section>

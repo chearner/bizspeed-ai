@@ -3,7 +3,7 @@
 	import { user } from '$lib/auth';
 	import { onMount } from 'svelte';
 	import { loading } from '$lib/stores';
-
+	import { Spinner } from 'flowbite-svelte';
 	let { close } = $props();
 
 	let bols = $state<{ name: string; url: string; created_at: string }[]>([]);
@@ -121,73 +121,65 @@
 	}
 </script>
 
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-	<div class="bg-base-100 flex max-h-[90vh] w-full max-w-2xl flex-col rounded-lg shadow-xl">
-		<div class="bg-primary flex items-center justify-between p-4">
-			<h2 class="text-2xl font-bold">BOL Documents</h2>
-			<button class="btn btn-ghost btn-sm" onclick={close}> icon </button>
-		</div>
-		<div class="flex-1 overflow-auto p-4">
-			{#if error}
-				<div class="alert alert-error mb-4">
-					<span>{error}</span>
-				</div>
-			{/if}
-			{#if $loading}
-				<div class="flex h-32 items-center justify-center">
-					<span class="loading loading-spinner loading-lg"></span>
-				</div>
-			{:else}
-				{#key bols}
-					{#if bols.length === 0}
-						<div class="py-8 text-center text-gray-500">
-							No BOL documents found. Start by scanning one!
-						</div>
-					{:else}
-						<div class="grid gap-4">
-							{#each bols as bol}
-								<div class="card bg-base-200">
-									<div class="card-body p-4">
-										<div class="flex items-start justify-between">
-											<div>
-												<h3 class="font-semibold">{bol.name}</h3>
-												<p class="text-sm text-gray-500">{bol.created_at}</p>
-											</div>
-											<div class="flex gap-2">
-												{#if bol.url}
-													<img
-														src={bol.url}
-														alt="Bill of Lading"
-														class="h-32 w-32 rounded object-cover"
-														onerror={(e) => handleImageError(e, bol)}
-													/>
-													<div class="flex flex-col gap-2">
-														<a href={bol.url} download={bol.name} class="btn btn-primary btn-sm">
-															icon Download
-														</a>
-														<button
-															class="btn btn-error btn-sm"
-															onclick={() => confirmDelete(bol.name)}
-															disabled={deletingBol === bol.name}
-														>
-															{#if deletingBol === bol.name}
-																<span class="loading loading-spinner loading-xs"></span>
-															{:else}
-																icon Delete
-															{/if}
-														</button>
-													</div>
-												{/if}
-											</div>
+<div class="bg-base-100 flex max-h-[90vh] w-full max-w-2xl flex-col rounded-lg shadow-xl">
+	<div class="flex-1 overflow-auto p-4">
+		{#if error}
+			<div class="alert alert-error mb-4">
+				<span>{error}</span>
+			</div>
+		{/if}
+		{#if $loading}
+			<Spinner />
+		{:else}
+			{#key bols}
+				{#if bols.length === 0}
+					<div class="py-8 text-center text-gray-500">
+						No BOL documents found. Start by scanning one!
+					</div>
+				{:else}
+					<div class="grid gap-4">
+						{#each bols as bol}
+							<div class="card bg-base-200">
+								<div class="card-body p-4">
+									<div class="flex items-start justify-between">
+										<div>
+											<h3 class="font-semibold">{bol.name}</h3>
+											<p class="text-sm text-gray-500">{bol.created_at}</p>
+										</div>
+										<div class="flex gap-2">
+											{#if bol.url}
+												<img
+													src={bol.url}
+													alt="Bill of Lading"
+													class="h-32 w-32 rounded object-cover"
+													onerror={(e) => handleImageError(e, bol)}
+												/>
+												<div class="flex flex-col gap-2">
+													<a href={bol.url} download={bol.name} class="btn btn-primary btn-sm">
+														icon Download
+													</a>
+													<button
+														class="btn btn-error btn-sm"
+														onclick={() => confirmDelete(bol.name)}
+														disabled={deletingBol === bol.name}
+													>
+														{#if deletingBol === bol.name}
+															<span class="loading loading-spinner loading-xs"></span>
+														{:else}
+															icon Delete
+														{/if}
+													</button>
+												</div>
+											{/if}
 										</div>
 									</div>
 								</div>
-							{/each}
-						</div>
-					{/if}
-				{/key}
-			{/if}
-		</div>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			{/key}
+		{/if}
 	</div>
 </div>
 {#if showConfirmDelete}

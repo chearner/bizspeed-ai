@@ -7,7 +7,7 @@ export default {
 		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
 	plugins: [plugin],
-	darkMode: 'selector',
+	darkMode: 'class',
 	theme: {
 		extend: {
 			zIndex: {

@@ -13,7 +13,9 @@
 		DropdownItem,
 		DropdownDivider
 	} from 'flowbite-svelte';
-	import { UserCircleOutline, UserSettingsOutline } from 'flowbite-svelte-icons';
+	import { UserCircleOutline, UserSettingsOutline, CogOutline } from 'flowbite-svelte-icons';
+	import { fade } from 'svelte/transition';
+	import { sineIn, sineOut } from 'svelte/easing';
 	import BizSpeedLogo from '$lib/images/bizspeed-logo.svelte';
 	import { page, navigating } from '$app/state';
 	import { user } from '$lib/auth';
@@ -44,50 +46,21 @@
 	});
 </script>
 
-<Navbar class="border-b-2 border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-gray-800">
-	<NavBrand href="/">
-		<BizSpeedLogo
-			height={scrolled ? logoHeight : logoHeight}
-			width={scrolled ? logoWidth : logoWidth}
-		/>
-	</NavBrand>
-	<div class="flex md:order-3">
-		<Avatar
-			id="avatar-menu"
-			class="w-full md:order-1 md:flex md:w-auto"
-			data-name={$user?.email}
-			src="./src/lib/images/hobbes.webp"
-			border
-		/>
-		<NavHamburger onclick={() => (hideNavMenu = false)} />
+<Navbar class="border-b border-gray-300 bg-gray-100 dark:border-gray-500 dark:bg-gray-800">
+	<div class="flex w-1/3">
+		<NavBrand href="/">
+			<BizSpeedLogo
+				height={scrolled ? logoHeight : logoHeight}
+				width={scrolled ? logoWidth : logoWidth}
+			/>
+		</NavBrand>
 	</div>
-	<Dropdown placement="bottom" triggeredBy="#avatar-menu">
-		<DropdownHeader>
-			<div class="text-sm font-bold">Username:</div>
-			<div class="truncate text-sm font-medium">{$user?.email}</div>
-		</DropdownHeader>
-		<DropdownItem class="flex items-center gap-2"
-			><UserCircleOutline size="sm" /><a href="/account" class="text-gray-800">Account</a
-			></DropdownItem
-		>
-		<DropdownItem class="flex items-center gap-2"
-			><UserSettingsOutline size="sm" /><a href="/account/settings" class="text-gray-800"
-				>Settings</a
-			></DropdownItem
-		>
-		<DropdownItem class="flex items-center gap-2"
-			><UserCircleOutline size="sm" /><a href="/account/signout" class="text-gray-800">Sign Out</a
-			></DropdownItem
-		>
-		<DropdownItem class="flex items-center gap-2"
-			><DarkMode btnClass="text-sm" size="sm" color="primary" /> Dark Mode</DropdownItem
-		>
-	</Dropdown>
 	<NavUl
 		hidden={hideNavMenu}
 		{activeUrl}
+		divClass="flex w-1/3 justify-center p-4"
 		activeClass="text-primary-800 dark:text-primary-100"
-		nonActiveClass="text-gray-800 hover:text-gray-800 dark:text-gray-100 dark:hover:text-gray-100"
+		nonActiveClass="text-gray-800 dark:text-gray-100"
 	>
 		<NavLi href="/">Home</NavLi>
 		<NavLi href="/about">About</NavLi>
@@ -95,6 +68,40 @@
 		<NavLi href="/industries">Industries</NavLi>
 		<NavLi href="/contact">Contact</NavLi>
 	</NavUl>
+	<div class="flex w-1/3 justify-end">
+		<Avatar
+			id="avatar-menu"
+			class="md:order-1 md:flex"
+			data-name={$user?.email}
+			src="./src/lib/images/hobbes.webp"
+			border
+		/>
+		<Dropdown
+			placement="bottom"
+			arrow={false}
+			transition={fade}
+			trigger="click"
+			triggeredBy="#avatar-menu"
+		>
+			<DropdownHeader>
+				<div class="text-sm font-bold">Username:</div>
+				<div class="truncate text-sm font-medium">{$user?.email}</div>
+			</DropdownHeader>
+			<DropdownItem class="flex items-center gap-2"
+				><UserCircleOutline size="sm" /><a href="/account">Account</a></DropdownItem
+			>
+			<DropdownItem class="flex items-center gap-2"
+				><CogOutline size="sm" /><a href="/account/settings">Settings</a></DropdownItem
+			>
+			<DropdownItem class="flex items-center gap-2"
+				><UserCircleOutline size="sm" /><a href="/account/signout">Sign Out</a></DropdownItem
+			>
+			<DropdownItem class="flex items-center gap-2"
+				><DarkMode btnClass="text-sm" size="sm" color="primary" /> Dark Mode</DropdownItem
+			>
+		</Dropdown>
+		<NavHamburger onclick={() => (hideNavMenu = false)} />
+	</div>
 </Navbar>
 
 <style></style>

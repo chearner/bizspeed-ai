@@ -42,6 +42,7 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
 		"@supabase/supabase-js": "^2.39.0",
+		"dayjs": "^1.11.13",
 		"flowbite-svelte-blocks": "^1.1.4",
 		"tailwind-merge": "^3.0.1",
 		"tesseract.js": "^6.0.0"

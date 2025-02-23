@@ -24,7 +24,7 @@
 			ulClass="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white"
 		>
 			<FooterLink href="/about">About</FooterLink>
-			<FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+			<FooterLink href="/privacy">Privacy Policy</FooterLink>
 			<FooterLink href="/support">Support</FooterLink>
 			<FooterLink href="/contact">Contact</FooterLink>
 		</FooterLinkGroup>

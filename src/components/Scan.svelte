@@ -6,7 +6,21 @@
 	import OCRProcessor from '$components/OCRProcessor.svelte';
 	import { FileImportOutline, FileCloneOutline } from 'flowbite-svelte-icons';
 	import { loading } from '$lib/stores';
-	import { Img, P, Heading, Button, Spinner } from 'flowbite-svelte';
+	import { Img, P, Heading, Button, Spinner, Modal, Tabs, TabItem } from 'flowbite-svelte';
+	import { Section } from 'flowbite-svelte-blocks';
+	import Files from '$components/Files.svelte';
+
+	let defaultModal = $state(false);
+
+	const handleCancel = () => {
+		alert('Clicked cancel');
+	};
+	const handleDelete = () => {
+		alert('Clicked delete');
+	};
+	const handleModal = () => {
+		defaultModal = true;
+	};
 
 	let showCamera = $state(false);
 	let showHistory = $state(false);
@@ -63,7 +77,32 @@
 	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold  md:text-5xl lg:text-6xl"
 		>AI-powered Document Scanner</Heading
 	>
-	<Img src="./src/lib/images/bol.jpeg" alt="BOL Scan" />
+	<!--<Img src="./src/lib/images/bol.jpeg" alt="BOL Scan" />-->
+	<Tabs tabStyle="underline" contentClass="p-0">
+		<TabItem open>
+			<span slot="title">BOLs</span>
+			<Files />
+		</TabItem>
+		<TabItem>
+			<span slot="title">Receipts</span>
+			<p class="text-sm text-gray-500 dark:text-gray-400">
+				<b>Re:</b>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+				labore et dolore magna aliqua.
+			</p>
+		</TabItem>
+		<div class="flex flex-1 justify-end">
+			<Button
+				class="float-right mb-4"
+				color="primary"
+				onclick={() => (showCamera = true)}
+				disabled={$loading}
+			>
+				<FileImportOutline class="me-2 h-4 w-4" />
+				Scan Document
+			</Button>
+		</div>
+	</Tabs>
 	{#if error}
 		<div class="alert alert-error mt-4">
 			{error}
@@ -75,16 +114,6 @@
 		</div>
 	{/if}
 	{#if $user}
-		<div class="mt-10 flex flex-col gap-4">
-			<Button color="primary" onclick={() => (showCamera = true)} disabled={$loading}>
-				<FileImportOutline class="me-2 h-4 w-4" />
-				Scan Document
-			</Button>
-			<Button color="primary" outline onclick={() => (showHistory = true)} disabled={$loading}>
-				<FileCloneOutline class="me-2 h-4 w-4" />
-				Files
-			</Button>
-		</div>
 		{#if currentPhoto}
 			<OCRProcessor photo={currentPhoto} onTextExtracted={handleTextExtracted} />
 			<div class="mt-4">
@@ -120,6 +149,12 @@
 {#if showCamera}
 	<Camera photo={handlePhoto} close={() => (showCamera = false)} />
 {/if}
-{#if showHistory}
-	<History close={() => (showHistory = false)} />
-{/if}
+<Modal title="Delete Item" bind:open={defaultModal} autoclose size="sm" class="w-full">
+	<p class="mb-4 text-center text-gray-500 dark:text-gray-300">
+		Are you sure you want to delete this item?
+	</p>
+	<div class="flex items-center justify-center space-x-4">
+		<Button color="light" on:click={handleCancel}>No, cancel</Button>
+		<Button color="red" on:click={handleDelete}>Yes, I'm sure</Button>
+	</div>
+</Modal>
