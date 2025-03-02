@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heading, P, Span, Mark, Img } from 'flowbite-svelte';
+	import { Heading, P, Span, Mark, Img, Select, Label } from 'flowbite-svelte';
 	import { Section, HeroHeader, News, FeatureDefault, FeatureItem } from 'flowbite-svelte-blocks';
 	import {
 		DollarOutline,
@@ -103,7 +103,9 @@
 			mobile technology.</svelte:fragment
 		>
 	</HeroHeader>
-	<FeatureDefault class="mx-auto mb-8 max-w-screen-md lg:mb-16">
+	<FeatureDefault
+		divClass="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-screen-md lg:mb-16 lg:grid-cols-3"
+	>
 		<FeatureItem>
 			<svelte:fragment slot="icon"
 				><TruckOutline size="xl" class="text-primary-600 dark:text-primary-300" /></svelte:fragment

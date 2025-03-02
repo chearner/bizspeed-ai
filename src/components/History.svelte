@@ -6,17 +6,20 @@
 	import { Spinner } from 'flowbite-svelte';
 	let { close } = $props();
 
-	let bols = $state<{ name: string; url: string; created_at: string }[]>([]);
+	let bols = $state<{ bol: string }[]>([]);
+	let images = $state<
+		{ file_name: string; image_url: string; created_at: string; id: string; image_type: string }[]
+	>([]);
 	let error = $state('');
 	let deletingBol = $state('');
 	let showConfirmDelete = $state(false);
 	let bolToDelete = $state<string | null>(null);
 
 	onMount(() => {
-		loadBols();
+		loadImages();
 	});
 
-	async function loadBols() {
+	async function loadImages() {
 		try {
 			loading.set(true);
 			error = '';

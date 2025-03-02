@@ -67,9 +67,6 @@
 			<button class="btn btn-primary btn-sm" onclick={installPWA}> Install </button>
 		</div>
 	{/if}
-	{#if $loading}
-		<Spinner />
-	{/if}
 	{@render children()}
 </main>
 <Footer />
