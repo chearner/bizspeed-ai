@@ -37,6 +37,8 @@
 		CloseCircleSolid
 	} from 'flowbite-svelte-icons';
 	import dayjs from 'dayjs';
+	import StatusBadge from '$components/StatusBadge.svelte';
+	import ImageBadge from '$components/ImageBadge.svelte';
 
 	interface BucketFile {
 		name: string;
@@ -63,7 +65,6 @@
 	let deletingFile = $state<string | null>(null);
 	let fileToDelete = $state<string | null>(null);
 
-	let cameraModal = $state(false);
 	let modalCameraOpen = $state(false);
 	let modalDeleteOpen = $state(false);
 	let modalFileOpen = $state(false);
@@ -280,8 +281,8 @@
 	</div>
 </Modal>
 
-{#if cameraModal}
-	<Camera {tableName} {bucketName} {imageType} {fileType} close={() => (cameraModal = false)} />
+{#if modalCameraOpen}
+	<Camera {tableName} {bucketName} {imageType} {fileType} close={() => (modalCameraOpen = false)} />
 {/if}
 
 <Section name="none" sectionClass="mt-0">
@@ -304,11 +305,11 @@
 				<Button
 					class="float-right"
 					color="primary"
-					onclick={() => (cameraModal = true)}
+					onclick={() => (modalCameraOpen = true)}
 					disabled={$loading}
 				>
 					<FileImportOutline class="me-2 h-4 w-4" />
-					New Scan
+					New {imageType} Scan
 				</Button>
 			</div>
 			<TableHead>

@@ -8,7 +8,7 @@
 	<meta name="description" content="Contact Us" />
 </svelte:head>
 
-<Section name="none" sectionClass="m-4 flex flex-col">
+<Section name="none" sectionClass="p-4">
 	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold md:text-5xl lg:text-6xl"
 		>Privacy Policy</Heading
 	>

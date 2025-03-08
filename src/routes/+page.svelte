@@ -10,7 +10,8 @@
 		UsersOutline
 	} from 'flowbite-svelte-icons';
 	let playbackRate = 1.0;
-	import Feature from '$components/Feature.svelte';
+	import CardScanBOL from '$components/CardScanBOL.svelte';
+	import CardScanMeter from '$components/CardScanMeter.svelte';
 </script>
 
 <svelte:head>
@@ -49,11 +50,14 @@
 	<P class="mb-6 px-4 text-lg dark:text-gray-400 lg:px-16 lg:text-xl"
 		>Modern cloud-based UI Native iOS and Android mobile apps US-based support</P
 	>
-	<P class="mb-6 px-4 text-lg dark:text-gray-400 lg:px-16 lg:text-xl">
+	<P class="mb-12 px-4 text-lg dark:text-gray-400 lg:px-16 lg:text-xl">
 		Set new standards for customer service and profitability in your market using BizSpeed’s mobile
 		software solutions for routing, dispatch, and delivery.
 	</P>
-	<Feature />
+	<div class="grid grid-cols-1 place-items-center items-start gap-4 sm:grid-cols-2">
+		<CardScanBOL />
+		<CardScanMeter />
+	</div>
 </div>
 <Section name="logos">
 	<HeroHeader>
@@ -106,29 +110,29 @@
 	<FeatureDefault
 		divClass="grid grid-cols-1 gap-8 mx-auto mb-8 max-w-screen-md lg:mb-16 lg:grid-cols-3"
 	>
-		<FeatureItem>
+		<FeatureItem class="h-16 w-16 dark:bg-primary-800 lg:h-16 lg:w-16 ">
 			<svelte:fragment slot="icon"
-				><TruckOutline size="xl" class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+				><TruckOutline size="xl" class="text-primary-600 dark:text-primary-100" /></svelte:fragment
 			>
 			<svelte:fragment slot="h3">goRoam: Dipatch</svelte:fragment>
 			<svelte:fragment slot="paragraph"
 				>Centralize dispatch and hold drivers accountable.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem>
+		<FeatureItem class="h-16 w-16 dark:bg-primary-800 lg:h-16 lg:w-16 ">
 			<svelte:fragment slot="icon"
-				><UsersOutline size="xl" class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+				><UsersOutline size="xl" class="text-primary-600 dark:text-primary-100" /></svelte:fragment
 			>
 			<svelte:fragment slot="h3">goRoam: Delivery</svelte:fragment>
 			<svelte:fragment slot="paragraph"
 				>Empower drivers to provide great customer service.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem>
+		<FeatureItem class="h-16 w-16 dark:bg-primary-800 lg:h-16 lg:w-16 ">
 			<svelte:fragment slot="icon"
 				><MapPinAltOutline
 					size="xl"
-					class="text-primary-600 dark:text-primary-300"
+					class="text-primary-600 dark:text-primary-100"
 				/></svelte:fragment
 			>
 			<svelte:fragment slot="h3">Route Builder</svelte:fragment>
@@ -136,11 +140,11 @@
 				>Set delivery routes with unparalleled efficiency.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem>
+		<FeatureItem class="h-16 w-16 dark:bg-primary-800 lg:h-16 lg:w-16">
 			<svelte:fragment slot="icon"
 				><DatabaseOutline
 					size="xl"
-					class="text-primary-600 dark:text-primary-300"
+					class="text-primary-600 dark:text-primary-100"
 				/></svelte:fragment
 			>
 			<svelte:fragment slot="h3">Tank Forecasting</svelte:fragment>
@@ -148,9 +152,9 @@
 				>Monitor tank levels remotely and improve delivery efficiency by 30% or more.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem>
+		<FeatureItem class="h-16 w-16 dark:bg-primary-800 lg:h-16 lg:w-16 ">
 			<svelte:fragment slot="icon"
-				><UsersOutline size="xl" class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+				><UsersOutline size="xl" class="text-primary-600 dark:text-primary-100" /></svelte:fragment
 			>
 			<svelte:fragment slot="h3">3rd Party Logistics (3PL)</svelte:fragment>
 			<svelte:fragment slot="paragraph"

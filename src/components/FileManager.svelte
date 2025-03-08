@@ -17,7 +17,8 @@
 		Checkbox,
 		ButtonGroup,
 		Modal,
-		Spinner
+		Spinner,
+		Badge
 	} from 'flowbite-svelte';
 	import { Section } from 'flowbite-svelte-blocks';
 	import {
@@ -26,10 +27,15 @@
 		ChevronRightOutline,
 		ChevronLeftOutline,
 		TrashBinOutline,
-		EyeOutline
+		EyeOutline,
+		FileImportOutline
 	} from 'flowbite-svelte-icons';
 	import dayjs from 'dayjs';
-
+	import Camera from '$components/Camera.svelte';
+	import StatusBadge from '$components/StatusBadge.svelte';
+	import ImageBadge from '$components/ImageBadge.svelte';
+	import { fly, fade } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	interface Image {
 		user_id: string;
 		image_id: number;
@@ -48,10 +54,12 @@
 		file_url: string;
 	}
 
-	let { tableName, bucketName, imageType, fileType } = $props<{
+	let showImage = $state(false);
+	let { tableName, bucketName, imageType, imageTypeId, fileType } = $props<{
 		tableName: string;
 		bucketName: string;
 		imageType: string;
+		imageTypeId: number;
 		fileType: string;
 	}>();
 
@@ -63,6 +71,7 @@
 	let showConfirmDelete = $state(false);
 	let fileToDelete = $state<number | null>(null);
 
+	let modalCameraOpen = $state(false);
 	let modalDeleteOpen = $state(false);
 	let modalFileOpen = $state(false);
 	let modalFile: ModalFile = $state<ModalFile>({
@@ -125,15 +134,20 @@
 			loading.set(true);
 			error = '';
 
-			const { data: data, error: tableError } = await supabase.from(tableName).select(`
+			const { data: data, error: tableError } = await supabase
+				.from(tableName)
+				.select(
+					`
 					*,
-					tbl_image_types (
+					tbl_image_types!inner (
 						image_type_name
 					),
-					tbl_status_types (
+					tbl_status_types!inner (
 						status_type_name
 					)
-				`);
+				`
+				)
+				.eq('tbl_image_types.image_type_id', imageTypeId);
 
 			if (tableError) throw tableError;
 
@@ -237,15 +251,14 @@
 </script>
 
 <Modal
+	dialogClass="animate-fadeIn fixed top-0 start-0 end-0 h-modal md:inset-0 md:h-full z-50 w-full p-4 flex"
 	title={modalFile.file_name}
 	bind:open={modalFileOpen}
-	autoclose
 	size="sm"
-	class="h-full w-full"
 >
 	<img
 		src={modalFile.file_url}
-		alt="File"
+		alt={modalFile.file_name}
 		class="h-full w-full rounded object-cover"
 		onerror={(e) => handleImageError(e, modalFile)}
 	/>
@@ -260,6 +273,17 @@
 		<Button color="red" on:click={deleteFile}>Yes, I'm sure</Button>
 	</div>
 </Modal>
+
+{#if modalCameraOpen}
+	<Camera
+		{modalCameraOpen}
+		{tableName}
+		{bucketName}
+		{imageType}
+		{fileType}
+		close={() => (modalCameraOpen = false)}
+	/>
+{/if}
 
 <Section name="none" sectionClass="mt-0">
 	{#if $loading}
@@ -288,7 +312,7 @@
 				</Dropdown>
 				<Button color="alternative">Filter<FilterSolid class="ml-2 h-3 w-3" /></Button>
 				<Dropdown class="w-48 space-y-2 p-3 text-sm">
-					<h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Document Status</h6>
+					<h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Status</h6>
 					<li>
 						<Checkbox>Completed (56)</Checkbox>
 					</li>
@@ -299,6 +323,15 @@
 						<Checkbox>Error (12)</Checkbox>
 					</li>
 				</Dropdown>
+				<Button
+					class="float-right"
+					color="primary"
+					onclick={() => (modalCameraOpen = true)}
+					disabled={$loading}
+				>
+					<FileImportOutline class="me-2 h-4 w-4" />
+					New {imageType} Scan
+				</Button>
 			</div>
 			<TableHead>
 				<TableHeadCell padding="px-4 py-3 text-center" scope="col"></TableHeadCell>
@@ -318,13 +351,18 @@
 							<TableBodyCell tdClass="px-4 py-3 text-nowrap"
 								>{dayjs(item.created_at).format('MMM D, YYYY h:mm A')}
 							</TableBodyCell>
-							<TableBodyCell tdClass="px-4 py-3 text-center">{item.image_type_name}</TableBodyCell>
-							<TableBodyCell tdClass="px-4 py-3 text-center">{item.status_type_name}</TableBodyCell>
+							<TableBodyCell tdClass="px-4 py-3 text-center"
+								><ImageBadge status={item.image_type_name} /></TableBodyCell
+							>
+							<TableBodyCell tdClass="px-4 py-3 text-center"
+								><StatusBadge status={item.status_type_name} /></TableBodyCell
+							>
 							<TableBodyCell tdClass="px-4 py-3 text-center"
 								><Button
 									color="alternative"
 									onclick={() => {
 										modalFile = { file_name: item.file_name, file_url: item.image_url };
+										showImage = true;
 										modalFileOpen = true;
 									}}
 								>
@@ -346,13 +384,21 @@
 							<TableBodyCell tdClass="px-4 py-3 text-nowrap"
 								>{dayjs(item.created_at).format('MMM D, YYYY h:mm A')}
 							</TableBodyCell>
-							<TableBodyCell tdClass="px-4 py-3 text-center">{item.image_type_name}</TableBodyCell>
-							<TableBodyCell tdClass="px-4 py-3 text-center">{item.status_type_name}</TableBodyCell>
+							<TableBodyCell tdClass="px-4 py-3 text-center"
+								><ImageBadge status={item.image_type_name} /></TableBodyCell
+							>
+							<TableBodyCell tdClass="px-4 py-3 text-center"
+								><StatusBadge status={item.status_type_name} /></TableBodyCell
+							>
 							<TableBodyCell tdClass="px-4 py-3 text-center"
 								><Button
 									color="alternative"
 									onclick={() => {
-										modalFile = { file_name: item.file_name, file_url: item.image_url };
+										modalFile = {
+											file_name: item.file_name,
+											file_url: item.image_url
+										};
+										showImage = false;
 										modalFileOpen = true;
 									}}
 								>

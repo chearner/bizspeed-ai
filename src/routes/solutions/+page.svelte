@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Heading, P } from 'flowbite-svelte';
+	import { Section } from 'flowbite-svelte-blocks';
 	//import Account from '$components/Account.svelte';
 </script>
 
@@ -8,7 +9,7 @@
 	<meta name="description" content="Solutions" />
 </svelte:head>
 
-<div class="m-4 flex flex-col">
+<Section name="none" sectionClass="p-4">
 	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold md:text-5xl lg:text-6xl"
 		>Solutions</Heading
 	>
@@ -35,4 +36,4 @@
 		Plan routes with maximum efficiency. Track planned vs actual performance in real time. Prevent
 		inventory loss or theft. Prevent issues with product integrity or incomplete deliveries.
 	</P>
-</div>
+</Section>

@@ -7,6 +7,4 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<div class="flex w-full flex-col items-center justify-center">
-	<Scan />
-</div>
+<Scan />

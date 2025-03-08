@@ -6,7 +6,8 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { loading } from '$lib/stores';
-	import { Breadcrumb, BreadcrumbItem, Spinner } from 'flowbite-svelte';
+	import { BullhornOutline } from 'flowbite-svelte-icons';
+	import { Breadcrumb, BreadcrumbItem, Spinner, Banner } from 'flowbite-svelte';
 
 	let showCamera = false;
 	let showHistory = false;
@@ -17,7 +18,7 @@
 
 	$effect(() => {
 		if (breadcrumbSegments) {
-			console.log(breadcrumbSegments);
+			//console.log(breadcrumbSegments);
 		}
 	});
 
@@ -57,7 +58,9 @@
 		<BreadcrumbItem href="/" home>Home</BreadcrumbItem>
 		{#if breadcrumbSegments.length}
 			{#each breadcrumbSegments as segment}
-				<BreadcrumbItem href={`/${segment}`} class="capitalize">{segment}</BreadcrumbItem>
+				<BreadcrumbItem href={`/${segment}`} class="capitalize"
+					>{segment.replace(/-/g, ' ')}</BreadcrumbItem
+				>
 			{/each}
 		{/if}
 	</Breadcrumb>
@@ -70,5 +73,22 @@
 	{@render children()}
 </main>
 <Footer />
+
+<Banner id="bottom-banner" position="sticky" bannerType="bottom">
+	<p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+		<span class="me-3 inline-flex rounded-full bg-gray-200 p-1 dark:bg-gray-600">
+			<BullhornOutline class="h-3 w-3 text-gray-500 dark:text-gray-400" />
+			<span class="sr-only">Light bulb</span>
+		</span>
+		<span>
+			MobileHub classic user can migrate to MobileHub 2.0! <a
+				href="https://bizspeed.com"
+				class="inline font-medium text-primary-600 underline decoration-solid decoration-2 underline-offset-2 hover:no-underline dark:text-primary-500 dark:decoration-1"
+			>
+				Contact us for more information
+			</a>
+		</span>
+	</p>
+</Banner>
 
 <style></style>
